@@ -98,6 +98,7 @@ void loop() {
     data++; // Incremento a la variable para ser enviado por MQTT
     char dataString[8]; // Define una arreglo de caracteres para enviarlos por MQTT, especifica la longitud del mensaje en 8 caracteres
     dtostrf(data, 1, 2, dataString);  // Esta es una función nativa de leguaje AVR que convierte un arreglo de caracteres en una variable String
+                                    //dtostrf(valor punto flotante a convertir,cantidad minima de caracteres a generar, precisión en decimales, varible donde se guardará)
     Serial.print("Contador: "); // Se imprime en monitor solo para poder visualizar que el evento sucede
     Serial.println(dataString);
     client.publish("codigoIoT/ejemplo/mqtt", dataString); // Esta es la función que envía los datos por MQTT, especifica el tema y el valor
@@ -129,7 +130,7 @@ void callback(char* topic, byte* message, unsigned int length) {
 
   // Ejemplo, en caso de recibir el mensaje true - false, se cambiará el estado del led soldado en la placa.
   // El ESP323CAM está suscrito al tema codigoIoT/ejemplo/mqtt
-  if (String(topic) == "codigoIoT/ejemplo/mqttin") {  // En caso de recibirse mensaje en el tema codigoIoT/ejemplo/mqtt
+  if (String(topic) == "codigoIoT/ejemplo/mqttin") {  // En caso de recibirse mensaje en el tema codigoIoT/ejemplo/mqttin
     if(messageTemp == "true"){
       Serial.println("Led encendido");
       digitalWrite(flashLedPin, HIGH);
